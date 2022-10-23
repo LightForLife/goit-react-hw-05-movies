@@ -26,7 +26,7 @@ export const Header = styled.header`
 //   margin: 0;
 // `;
 
-export const Link = styled(NavLink)`
+export const StyledLink = styled(NavLink)`
   padding: 8px 16px;
   border-radius: 4px;
   text-decoration: none;
@@ -41,5 +41,11 @@ export const Link = styled(NavLink)`
   &.active {
     color: white;
     background-color: orangered;
+  }
+
+  :hover:not(.active),
+  :focus-visible:not(.active) {
+    color: red;
+    background-color: orange;
   }
 `;
