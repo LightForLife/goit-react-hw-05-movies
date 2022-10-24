@@ -10,7 +10,9 @@ export default function Home() {
         const movies = await fetchTrendMovie();
         console.log(movies);
         setFilms(movies);
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
     }
 
     fetchMovies();
