@@ -21,18 +21,14 @@ export const Header = styled.header`
   }
 `;
 
-// export const Logo = styled.p`
-//   font-weight: 700;
-//   margin: 0;
-// `;
-
 export const StyledLink = styled(NavLink)`
   padding: 8px 16px;
   border-radius: 4px;
   text-decoration: none;
-  color: black;
-  background-color: greenyellow;
+  color: white;
+  background-color: black;
   font-weight: 500;
+  transition: all 0.3s ease-in-out;
 
   & + & {
     margin-left: 20px;
@@ -40,12 +36,11 @@ export const StyledLink = styled(NavLink)`
 
   &.active {
     color: white;
-    background-color: orangered;
+    background-color: blue;
   }
 
   :hover:not(.active),
   :focus-visible:not(.active) {
-    color: red;
-    background-color: orange;
+    scale: 1.05;
   }
 `;

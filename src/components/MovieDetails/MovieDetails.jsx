@@ -1,10 +1,10 @@
 import { useState, useEffect, useCallback, Suspense } from 'react';
 import { useParams, Link, Outlet, useLocation } from 'react-router-dom';
-import { fetchMoviesDetails, fetchMoviesGenres } from '../API';
+import { fetchMoviesDetails, fetchMoviesGenres } from '../../Api';
 import { BackLink } from 'components/BackLink/BackLink';
 import { FilmCard, FilmTitle, FilmInfo } from './MovieDetails.styled';
 
-export const MovieDetails = () => {
+const MovieDetails = () => {
   const { movieId } = useParams();
 
   const [film, setFilm] = useState([]);
@@ -13,7 +13,6 @@ export const MovieDetails = () => {
   const [error, setError] = useState(null);
 
   const location = useLocation();
-  const locationFrom = location?.state?.from ?? '/';
 
   const getFilmsDetails = useCallback(async () => {
     if (!movieId) {
@@ -41,8 +40,8 @@ export const MovieDetails = () => {
 
   return (
     <main>
-      <BackLink to={locationFrom}>◀ Back</BackLink>
-      {/* {loading && <Loader />} */}
+      <BackLink to={location.state?.from ?? '/movies'}>◀ Back</BackLink>
+      {isLoading && <h2>Loading information...</h2>}
       {error && <h2>Oops...there is nothing, try again</h2>}
       {!error ? (
         <FilmCard>
@@ -88,9 +87,11 @@ export const MovieDetails = () => {
           </div>
         </div>
       )}
-      <Suspense fallback={<div>Loading subpage...</div>}>
+      <Suspense fallback={null}>
         <Outlet />
       </Suspense>
     </main>
   );
 };
+
+export default MovieDetails;

@@ -1,28 +1,49 @@
-import { useState, useEffect } from 'react';
-import { fetchTrendMovie } from 'components/API';
+import { useState, useEffect, useCallback } from 'react';
+import { fetchTrendMovie } from 'Api';
 import { FilmList } from 'components/FilmList/FilmList';
+import { useLocation } from 'react-router-dom';
 
-export default function Home() {
+const Home = () => {
   const [films, setFilms] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const location = useLocation();
+
+  const fetchFilms = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      const films = await fetchTrendMovie();
+      setFilms(films);
+    } catch {
+      setError('Failed to load films :(');
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
-    async function fetchMovies() {
-      try {
-        const movies = await fetchTrendMovie();
-        setFilms(movies);
-      } catch (error) {
-        console.log(error);
-      }
-    }
+    fetchFilms();
+  }, [fetchFilms]);
 
-    fetchMovies();
-    return;
-  }, []);
+  useEffect(() => {
+    location.pathname = '/';
+  }, [location]);
 
   return (
     <main>
       <h2>Tranding today</h2>
-      <FilmList films={films} />
+      {!isLoading ? (
+        !error ? (
+          <FilmList films={films} />
+        ) : (
+          <div>{error}</div>
+        )
+      ) : (
+        <div>Loading ...</div>
+      )}
     </main>
   );
-}
+};
+
+export default Home;

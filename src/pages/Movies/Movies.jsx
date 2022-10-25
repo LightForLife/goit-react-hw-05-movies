@@ -1,13 +1,15 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Searchbar } from 'components/Searchbar/Searchbar';
-import { fetchSearchMovies } from 'components/API';
+import { fetchSearchMovies } from 'Api';
 import { FilmList } from 'components/FilmList/FilmList';
 
-export default function Movies() {
+const Movies = () => {
   const [films, setFilms] = useState([]);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
+  const [searchParams, setSearchParams] = useSearchParams();
   const nameFilms = searchParams.get('query') ?? '';
 
   const createSearchMovies = query => {
@@ -19,7 +21,9 @@ export default function Movies() {
       const movies = await fetchSearchMovies(nameFilms);
       setFilms(movies);
     } catch (error) {
-      console.log(error);
+      setError('Failed to load films :(');
+    } finally {
+      setIsLoading(false);
     }
   }, [nameFilms]);
 
@@ -30,7 +34,17 @@ export default function Movies() {
   return (
     <main>
       <Searchbar onSubmit={createSearchMovies} />
-      <FilmList films={films} />
+      {!isLoading ? (
+        !error ? (
+          <FilmList films={films} />
+        ) : (
+          <div>{error}</div>
+        )
+      ) : (
+        <div>Loading ...</div>
+      )}
     </main>
   );
-}
+};
+
+export default Movies;

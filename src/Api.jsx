@@ -18,6 +18,12 @@ export function fetchSearchMovies(query) {
   );
 }
 
+export function fetchMoviesReviews(movieId) {
+  return getMovies(
+    `${BASE_URL}/movie/${movieId}/reviews?api_key=${KEY}&language=en-US&`
+  );
+}
+
 export async function fetchMoviesDetails(movieId) {
   const response = await axios.get(
     `${BASE_URL}movie/${movieId}?api_key=${KEY}&language=en-US`
@@ -32,12 +38,6 @@ export async function fetchMoviesCast(movieId) {
   );
   const result = response.data.cast;
   return result;
-}
-
-export function fetchMoviesReviews(movieId) {
-  return getMovies(
-    `${BASE_URL}/movie/${movieId}/reviews?api_key=${KEY}&language=en-US&`
-  );
 }
 
 export async function fetchMoviesGenres(movieId) {

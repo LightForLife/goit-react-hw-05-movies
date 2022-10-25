@@ -1,36 +1,40 @@
-import { Formik, Form, Field } from 'formik';
+import { useState } from 'react';
+import PropTypes from 'prop-types';
 
 export const Searchbar = ({ onSubmit }) => {
-  const handleSubmit = (value, _) => {
-    if (value.search.trim() === '') {
-      alert('Введите текст');
-      //   toast.error(`Please enter text to search`);
+  const [query, setQuery] = useState('');
+
+  const handleChange = event => {
+    setQuery(event.currentTarget.value.trim());
+  };
+
+  const handleSubmit = event => {
+    event.preventDefault();
+
+    if (query === '') {
+      alert(`Please enter text to search`);
       return;
     }
 
-    onSubmit(value.search.trim());
-    // actions.resetForm();
+    onSubmit(query);
   };
 
   return (
-    <Formik initialValues={{ search: '' }} onSubmit={handleSubmit}>
+    <div>
       <header>
-        <Form>
-          <Field
-            // className={css.search__input}
-            type="text"
+        <form onSubmit={handleSubmit}>
+          <input
+            onChange={handleChange}
             placeholder="Search movies"
-            name="search"
             autoComplete="off"
           />
-          <button
-            type="submit"
-            // disabled={isSubmitting}
-          >
-            Search
-          </button>
-        </Form>
+          <button type="submit">Search</button>
+        </form>
       </header>
-    </Formik>
+    </div>
   );
+};
+
+Searchbar.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
 };

@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { fetchMoviesCast } from 'components/API';
+import { fetchMoviesCast } from 'Api';
 import { useState, useEffect, useCallback } from 'react';
 
 const Casts = () => {
@@ -43,4 +43,5 @@ const Casts = () => {
     </div>
   );
 };
+
 export default Casts;

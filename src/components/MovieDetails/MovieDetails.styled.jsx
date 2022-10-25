@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const FilmCard = styled.div`
   display: flex;
-  /* align-items: center; */
+  margin-top: 20px;
   margin-bottom: 20px;
 `;
 
