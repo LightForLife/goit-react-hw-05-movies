@@ -18,19 +18,32 @@ export function fetchSearchMovies(query) {
   );
 }
 
-export function fetchMoviesDetails(moviesId) {
-  return getMovies(
-    `${BASE_URL}movie/${moviesId}?api_key=${KEY}&language=en-US`
+export async function fetchMoviesDetails(movieId) {
+  const response = await axios.get(
+    `${BASE_URL}movie/${movieId}?api_key=${KEY}&language=en-US`
   );
+  const result = response.data;
+  return result;
 }
-export function fetchMoviesCast(moviesId) {
-  return getMovies(
-    `${BASE_URL}movie/${moviesId}/credits?api_key=${KEY}&language=en-US&`
+
+export async function fetchMoviesCast(movieId) {
+  const response = await axios.get(
+    `${BASE_URL}movie/${movieId}/credits?api_key=${KEY}&language=en-US`
   );
+  const result = response.data.cast;
+  return result;
 }
 
 export function fetchMoviesReviews(movieId) {
   return getMovies(
     `${BASE_URL}/movie/${movieId}/reviews?api_key=${KEY}&language=en-US&`
   );
+}
+
+export async function fetchMoviesGenres(movieId) {
+  const response = await axios.get(
+    `${BASE_URL}movie/${movieId}?api_key=${KEY}&language=en-US`
+  );
+  const filmGenres = response.data.genres.map(genre => genre.name);
+  return filmGenres;
 }
