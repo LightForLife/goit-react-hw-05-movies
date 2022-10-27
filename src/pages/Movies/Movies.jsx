@@ -25,8 +25,6 @@ const Movies = () => {
   const searchFilms = useCallback(async () => {
     try {
       const movies = await fetchSearchMovies(nameFilms);
-      console.log(movies);
-      console.log(movies.length);
       if (movies.length === 0) {
         alert(`Movies not found`);
         return;
