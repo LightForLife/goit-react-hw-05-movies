@@ -9,8 +9,6 @@ const Movies = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  console.log(films);
-
   const [searchParams, setSearchParams] = useSearchParams();
   const nameFilms = searchParams.get('query') ?? '';
 
@@ -27,6 +25,12 @@ const Movies = () => {
   const searchFilms = useCallback(async () => {
     try {
       const movies = await fetchSearchMovies(nameFilms);
+      console.log(movies);
+      console.log(movies.length);
+      if (movies.length === 0) {
+        alert(`Movies not found`);
+        return;
+      }
       setFilms(movies);
     } catch (error) {
       setError('Failed to load films :(');
