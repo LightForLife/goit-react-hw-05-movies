@@ -9,11 +9,19 @@ const Movies = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  console.log(films);
+
   const [searchParams, setSearchParams] = useSearchParams();
   const nameFilms = searchParams.get('query') ?? '';
 
-  const createSearchMovies = query => {
-    setSearchParams(query !== '' ? { query } : {});
+  const updateQueryString = query => {
+    if (query === '') {
+      alert(`Please enter text to search`);
+      return;
+    }
+
+    const nextParams = query !== '' ? { query } : {};
+    setSearchParams(nextParams);
   };
 
   const searchFilms = useCallback(async () => {
@@ -33,7 +41,7 @@ const Movies = () => {
 
   return (
     <main>
-      <Searchbar onSubmit={createSearchMovies} />
+      <Searchbar value={nameFilms} onSubmit={updateQueryString} />
       {!isLoading ? (
         !error ? (
           <FilmList films={films} />

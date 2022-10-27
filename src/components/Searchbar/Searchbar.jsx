@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 
-export const Searchbar = ({ onSubmit }) => {
+export const Searchbar = ({ onSubmit, value }) => {
   const [query, setQuery] = useState('');
 
   const handleChange = event => {
@@ -11,11 +11,6 @@ export const Searchbar = ({ onSubmit }) => {
   const handleSubmit = event => {
     event.preventDefault();
 
-    if (query === '') {
-      alert(`Please enter text to search`);
-      return;
-    }
-
     onSubmit(query);
   };
 
@@ -23,11 +18,7 @@ export const Searchbar = ({ onSubmit }) => {
     <div>
       <header>
         <form onSubmit={handleSubmit}>
-          <input
-            onChange={handleChange}
-            placeholder="Search movies"
-            autoComplete="off"
-          />
+          <input type="text" defaultValue={value} onChange={handleChange} />
           <button type="submit">Search</button>
         </form>
       </header>

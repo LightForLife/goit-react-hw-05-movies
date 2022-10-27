@@ -42,7 +42,6 @@ const MovieDetails = () => {
     <main>
       <BackLink to={location.state?.from ?? '/movies'}>◀ Back</BackLink>
       {isLoading && <h2>Loading information...</h2>}
-      {error && <h2>Oops...there is nothing, try again</h2>}
       {!error ? (
         <FilmCard>
           <div>
